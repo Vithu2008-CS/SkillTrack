@@ -17,5 +17,11 @@ foreach ($storageDirs as $dir) {
 // Force the view compiled path to use the writeable temp directory
 putenv('VIEW_COMPILED_PATH=/tmp/storage/framework/views');
 
-// Forward the request to Laravel's public entrypoint
-require __DIR__ . '/../public/index.php';
+// Forward the request to Laravel's public entrypoint and catch any bootstrap exceptions
+try {
+    require __DIR__ . '/../public/index.php';
+} catch (\Throwable $e) {
+    error_log('!!! BOOTSTRAP EXCEPTION: ' . $e->getMessage() . ' in ' . $e->getFile() . ':' . $e->getLine());
+    error_log($e->getTraceAsString());
+    throw $e;
+}
