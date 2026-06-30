@@ -7,6 +7,7 @@ use App\Models\Skill;
 use App\Models\Milestone;
 use App\Models\Badge;
 use Illuminate\Database\Seeder;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class DatabaseSeeder extends Seeder
 {
