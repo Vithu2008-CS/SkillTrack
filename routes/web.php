@@ -7,6 +7,11 @@ use Inertia\Inertia;
 
 use App\Http\Controllers\SkillController;
 
+use App\Http\Controllers\AsgardeoAuthController;
+
+Route::get('/auth/redirect', [AsgardeoAuthController::class, 'redirectToAsgardeo'])->name('asgardeo.redirect');
+Route::get('/auth/callback', [AsgardeoAuthController::class, 'handleAsgardeoCallback'])->name('asgardeo.callback');
+
 Route::get('/', [SkillController::class, 'index'])->name('dashboard');
 Route::get('/dashboard', [SkillController::class, 'index']);
 Route::post('/milestones/{milestone}/toggle', [SkillController::class, 'toggleMilestone'])->name('milestones.toggle');
