@@ -14,6 +14,18 @@ foreach ($storageDirs as $dir) {
     }
 }
 
+// Copy SQLite database to writable /tmp directory if using SQLite
+if (($dbConnection = getenv('DB_CONNECTION') ?: 'sqlite') === 'sqlite') {
+    $sourceDb = __DIR__ . '/../database/database.sqlite';
+    $targetDb = '/tmp/database.sqlite';
+    if (file_exists($sourceDb)) {
+        if (!file_exists($targetDb)) {
+            copy($sourceDb, $targetDb);
+        }
+        putenv("DB_DATABASE=$targetDb");
+    }
+}
+
 // Force the view compiled path to use the writeable temp directory
 putenv('VIEW_COMPILED_PATH=/tmp/storage/framework/views');
 
